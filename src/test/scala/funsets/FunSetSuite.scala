@@ -37,6 +37,9 @@ class FunSetSuite extends munit.FunSuite:
     lazy val s2 = singletonSet(2)
     lazy val s3 = singletonSet(3)
     lazy val s4 = singletonSet(1)
+    lazy val divisibleBy6: FunSet = (x: Int) => x % 6 == 0
+    lazy val divisibleBy4: FunSet = (x: Int) => x % 4 == 0
+    lazy val divisibleBy2: FunSet = (x: Int) => x % 2 == 0
 
   test("singleton set only one contains one") {
     new TestSets:
@@ -88,7 +91,15 @@ class FunSetSuite extends munit.FunSuite:
       assert(contains(even, 2))
   }
 
+  test("forall four multiples checks two divisibility") {
+    new TestSets:
+      assert(forall(divisibleBy4, divisibleBy2))
+  }
 
+  test("forall two multiples checks six divisibility") {
+    new TestSets:
+      assert(!forall(divisibleBy2, divisibleBy6))
+  }
 
   import scala.concurrent.duration.*
   override val munitTimeout = 10.seconds
